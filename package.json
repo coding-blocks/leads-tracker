@@ -1,6 +1,6 @@
 {
   "name": "leads-tracker",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -9,7 +9,9 @@
     "prestart": "rm -rf dist/*; tsc",
     "start": "node dist/index.js",
     "precover": "rm -rf coverage/* dist/*; tsc",
-    "cover": "node_modules/.bin/nyc node_modules/.bin/_mocha"
+    "cover": "node_modules/.bin/nyc node_modules/.bin/_mocha",
+    "preapidoc": "rm -rf docs; mkdir -p docs",
+    "apidoc": "apidoc -i src/ -o docs/"
   },
   "nyc": {
     "extension": [
@@ -19,6 +21,9 @@
       "lcov",
       "text-summary"
     ]
+  },
+  "apidoc": {
+    "title": "CB Leads Tracker"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +38,8 @@
   "devDependencies": {
     "@types/body-parser": "^1.16.4",
     "@types/express": "^4.0.36",
+    "@types/sequelize": "^4.0.67",
+    "apidoc": "^0.17.6",
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
     "mocha": "^3.4.2",

@@ -1,7 +1,12 @@
 const router = require('express').Router();
 const models = require('../../db/models').models;
 
-// get all the users
+/**
+ * @api {get} /users/ GET /users/
+ * @apiName GetUsers
+ * @apiGroup User
+ *
+ */
 router.get('/', function (req, res) {
   models.User.findAll().then(function (users) {
     if (users.length !== 0) {
@@ -27,7 +32,14 @@ router.get('/', function (req, res) {
   })
 });
 
-// get details of a particular user
+/**
+ * @api {get} /users/:id GET /users/:id
+ * @apiName GetUserById
+ * @apiGroup User
+ *
+ * @apiParam {number} id
+ *
+ */
 router.get('/:id', function (req, res) {
   models.User.findOne({
     where: {id: parseInt(req.params.id)}
@@ -55,7 +67,18 @@ router.get('/:id', function (req, res) {
   })
 });
 
-//add any user
+
+/**
+ * @api {post} /users/add POST /users/add
+ * @apiName AddUser
+ * @apiGroup User
+ *
+ * @apiParam {string} name
+ * @apiParam {string} email
+ * @apiParam {string} contact Phone number
+ * @apiParam {string} centre
+ *
+ */
 router.post('/add', function (req, res) {
   const userData = req.body.userData || {
       name: req.body.name,
@@ -89,7 +112,17 @@ router.post('/add', function (req, res) {
   })
 });
 
-//edit details of the user
+/**
+ * @api {put} /users/:id PUT /users/:id
+ * @apiName EditUser
+ * @apiGroup User
+ *
+ * @apiParam {string} name
+ * @apiParam {string} email
+ * @apiParam {string} contact Phone number
+ * @apiParam {string} centre
+ *
+ */
 router.put('/:id', function (req, res) {
   const userData = req.body.userData || {
       name: req.body.name,
@@ -127,7 +160,12 @@ router.put('/:id', function (req, res) {
   });
 });
 
-// delete any user
+/**
+ * @api {delete} /users/:id DELETE /users/:id
+ * @apiName DeleteUser
+ * @apiGroup User
+ *
+ */
 router.delete('/:id', function (req, res) {
   models.User.destroy({
     where: {id: parseInt(req.params.id)},
