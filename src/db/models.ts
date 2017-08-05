@@ -1,4 +1,4 @@
-import Sequelize, {Model} from 'sequelize'
+import Sequelize = require('sequelize');
 
 var secrets;
 try {
@@ -22,36 +22,36 @@ const User = db.define('user', {
 });
 
 const Lead = db.define('lead', {
-  id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true}
-  , name: {type: Sequelize.STRING, allowNull: false}
-  , email: {type: Sequelize.STRING, allowNull: false}
-  , contact: {type: Sequelize.STRING, allowNull: false}
-  , dob: Sequelize.STRING
-  , gaurdianName: Sequelize.STRING
-  , gaurdianContact: Sequelize.STRING
-  , gaurdianEmail: Sequelize.STRING
-  , college: Sequelize.STRING
-  , branch: Sequelize.STRING
-  , university: Sequelize.STRING
-  , collegeBatch: Sequelize.STRING
-  , address: Sequelize.STRING
-  , city: Sequelize.STRING
-  , state: Sequelize.STRING
-  , pincode: Sequelize.STRING
-  , coursesOfInterest: Sequelize.ARRAY(Sequelize.INTEGER)
-  , centresOfInterest: Sequelize.ARRAY(Sequelize.INTEGER)
-  , referrer: Sequelize.ARRAY(Sequelize.STRING)
-  , VMCRollNumber: Sequelize.STRING
-  , CBRollNumber: Sequelize.STRING
-  , cbStudentReferral: Sequelize.JSON
-  /*
-   Expected Structure:
-   {
-   id: Sequelize.STRING
-   , name: Sequelize.STRING
-   }
-   */
-  , status: Sequelize.STRING
+    id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true}
+    , name: {type: Sequelize.STRING, allowNull: false}
+    , email: {type: Sequelize.STRING, allowNull: false}
+    , contact: {type: Sequelize.STRING, allowNull: false}
+    , dob: Sequelize.STRING
+    , gaurdianName: Sequelize.STRING
+    , gaurdianContact: Sequelize.STRING
+    , gaurdianEmail: Sequelize.STRING
+    , college: Sequelize.STRING
+    , branch: Sequelize.STRING
+    , university: Sequelize.STRING
+    , collegeBatch: Sequelize.STRING
+    , address: Sequelize.STRING
+    , city: Sequelize.STRING
+    , state: Sequelize.STRING
+    , pincode: Sequelize.STRING
+    , coursesOfInterest: Sequelize.ARRAY(Sequelize.INTEGER)
+    , centresOfInterest: Sequelize.ARRAY(Sequelize.INTEGER)
+    , referrer: Sequelize.ARRAY(Sequelize.STRING)
+    , VMCRollNumber: Sequelize.STRING
+    , CBRollNumber: Sequelize.STRING
+    , cbStudentReferral: Sequelize.JSON
+    /*
+     Expected Structure:
+     {
+     id: Sequelize.STRING
+     , name: Sequelize.STRING
+     }
+     */
+    , status: {type: Sequelize.ENUM('New','Interested','Uninterested','Enrolled','Untracked'), allowNull: false, defaultValue:'New'}
 });
 
 const Comment = db.define('comment', {

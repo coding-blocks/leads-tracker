@@ -19,6 +19,7 @@ it("POST /add should add a lead(Correct Details)", (done) => {
   }).end((e, r) => {
     r.statusCode.should.equal(201)
     r.body.success.should.equal(true)
+    r.body.data.status.should.equal('New');
     done()
   })
 })

@@ -8,7 +8,7 @@ router.get('/:leadId', function (req, res) {
     where: {leadId: leadId}
     , include: [models.User, models.Lead]
   }).then(function (comments) {
-    if (comments.data) {
+    if (comments.length !== 0) {
       res.status(200).send({success: true, data: comments.map((comment) => comment.get())})
     } else {
       res.status(404).send({
@@ -35,6 +35,16 @@ router.get('/:leadId', function (req, res) {
 router.post('/add', function (req, res) {
   const userId = req.body.userId;
   const leadId = req.body.leadId;
+
+  if (!userId || !leadId || req.body.comment === '') {
+    return res.status(400).send({
+      success: false
+      , code: "400"
+      , error: {
+        message: "Could not add the Comment(Incorrect Details)."
+      }
+    })
+  }
 
   models.Comment.create({
     comment: req.body.comment
@@ -72,6 +82,7 @@ router.delete('/:leadId', function (req, res) {
   models.Comment.destroy({
     where: {leadId: leadId}
   }).then(function (noOfCommentsDeleted) {
+    console.log(noOfCommentsDeleted)
     if (noOfCommentsDeleted !== 0) {
       res.status(200).send({success: true})
     } else {
