@@ -1,4 +1,4 @@
-import Sequelize, {Model} from 'sequelize'
+import Sequelize = require('sequelize');
 
 var secrets;
 try {
@@ -51,7 +51,7 @@ const Lead = db.define('lead', {
      , name: Sequelize.STRING
      }
      */
-    , status: {type: Sequelize.DataTypes.ENUM('New','Interested','Uninterested','Enrolled','Untracked'), allowNull: false, defaultValue:'New'}
+    , status: {type: Sequelize.ENUM('New','Interested','Uninterested','Enrolled','Untracked'), allowNull: false, defaultValue:'New'}
 });
 
 const Comment = db.define('comment', {
