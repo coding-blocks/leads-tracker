@@ -8,6 +8,6 @@ db.sync({force: false}).then(() => {
   console.log('Database configured')
 
   app.listen(CONFIG.PORT, function (req, res, next) {
-    console.log('Server Listening at 8000');
+    console.log('Server Listening at 8080');
   });
 });

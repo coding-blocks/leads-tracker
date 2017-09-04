@@ -6,8 +6,8 @@ import apirouters = require('./routers/api');
 
 const app: Application = express();
 
-app.use(bp.json());
 app.use(bp.urlencoded({extended: true}));
+app.use(bp.json());
 
 app.use('/api', apirouters);
 app.use('/docs', express.static(__dirname + "/../docs"))

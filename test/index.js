@@ -25,11 +25,11 @@ describe("/api", function () {
     console.info("Running API test");
   });
   importTest("/", './api/index.js');
-  importTest("/courses", './api/courses.js')
-  importTest("/users", './api/users.js')
-  importTest("/leads", './api/leads.js')
-  importTest("/centres", "./api/centres");
-  importTest("/comments", "./api/comments");
+  importTest("/courses", './api/courses.js');
+  importTest("/users", './api/users.js');
+  importTest("/leads", './api/leads.js');
+  importTest("/centres", "./api/centres.js");
+  importTest("/comments", "./api/comments.js");
   after(function () {
     console.info("All API tests have run");
   });

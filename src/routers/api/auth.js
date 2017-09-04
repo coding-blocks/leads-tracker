@@ -23,13 +23,72 @@ try {
  *
  * @apiParam {string} code The request code we get from 1st part of explicit Oauth2
  *
- * @apiErrorExample {json} ErrorResponse
+ * @apiErrorExample {json} ErrorResponse(OneAuth Server Error: POST)
+ *      HTTP/1.1 500 Internal Server Error
  *      {
  *        "success": false,
  *        "code": "500",
  *        "error": {
- *            "message": "Could not post data to Oneauth API(Internal Server Error)."
+ *            "message": "Could not post data to OneAuth API(OneAuth Server POST Error)."
  *        }
+ *      }
+ *
+ * @apiErrorExample {json} ErrorResponse(Database Error: FIND)
+ *      HTTP/1.1 500 Internal Server Error
+ *      {
+ *        "success": false,
+ *        "code": "500",
+ *        "error": {
+ *            "message": "Could not find in OneAuth Table(Database Error: FIND)."
+ *        }
+ *      }
+ *
+ * @apiErrorExample {json} ErrorResponse(OneAuth Server Error: GET)
+ *      HTTP/1.1 500 Internal Server Error
+ *      {
+ *        "success": false,
+ *        "code": "500",
+ *        "error": {
+ *            "message": "Could not get details from OneAuth API(OneAuth Server Error: GET)."
+ *        }
+ *      }
+ *
+ * @apiErrorExample {json} ErrorResponse(Database Error: CREATE)
+ *      HTTP/1.1 500 Internal Server Error
+ *      {
+ *        "success": false,
+ *        "code": "500",
+ *        "error": {
+ *            "message": "Could not create in OneAuth Table(Database Error: CREATE)."
+ *        }
+ *      }
+ *
+ *
+ * @apiErrorExample {json} ErrorResponse(Unauthorized)
+ *      HTTP/1.1 401 Unauthorized
+ *      {
+ *        "success": false,
+ *        "code": "500",
+ *        "error": {
+ *            "message": "Accessible to only CB employees(Unauthorized)"
+ *        }
+ *      }
+ *
+ * @apiSuccessExample {json} SuccessResponse(User Exists)
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "success": true,
+ *        "code": "200",
+ *        "token": "Random Token"
+ *
+ *      }
+ *
+ * @apiSuccessExample {json} SuccessResponse(New User)
+ *      HTTP/1.1 201 Created
+ *      {
+ *        "success": true,
+ *        "code": "201",
+ *        "token": "Random Token"
  *      }
  */
 router.post('/', function (req, res) {
@@ -66,7 +125,7 @@ router.post('/', function (req, res) {
                 }
                 , oneauthToken: authtoken.data.access_token
                 , token: uid(30)
-              },{
+              }, {
                 include: [models.User]
               }).then(function (oneauthFinal) {
                 res.status(201).send({
@@ -79,12 +138,19 @@ router.post('/', function (req, res) {
                   success: false
                   , code: "500"
                   , error: {
-                    message: "Could not create in Oneauth Table(Internal Server Error)."
+                    message: "Could not create in OneAuth Table(Database Error)."
                   }
                 })
               })
             } else {
-              return res.status(403).send({error: "Accessible to only CB employees"})
+              return res.status(401).send({
+                success: false
+                , code: "401"
+                , error: {
+                  message: "Accessible to only CB employees(Unauthorized)"
+                }
+
+              })
             }
 
           }).catch(function (err) {
@@ -93,12 +159,10 @@ router.post('/', function (req, res) {
               success: false
               , code: "500"
               , error: {
-                message: "Could not get details from Oneauth API(Internal Server Error)."
+                message: "Could not get details from OneAuth API(OneAuth Server GET Error)."
               }
             })
           })
-          //
-          //
         }
       }).catch(function (err) {
         console.log(err);
@@ -106,7 +170,7 @@ router.post('/', function (req, res) {
           success: false
           , code: "500"
           , error: {
-            message: "Could not find in Oneauth(Internal Server Error)."
+            message: "Could not find in OneAuth Table(Database Error)."
           }
         })
       })
@@ -116,7 +180,7 @@ router.post('/', function (req, res) {
       success: false
       , code: "500"
       , error: {
-        message: "Could not post data to Oneauth API(Internal Server Error)."
+        message: "Could not post data to OneAuth API(OneAuth Server POST Error)."
       }
     })
   })
